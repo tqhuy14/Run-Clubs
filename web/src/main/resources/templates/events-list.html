@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<body class="d-flex flex-column h-100">
+<main class="flex-shrink-0">
+
+  <!-- Page Content-->
+  <section layout:fragment="body" class="py-5">
+    <div class="container px-5 my-5">
+      <div class="text-center mb-5">
+        <h1 class="fw-bolder">Events Available</h1>
+        <p class="lead fw-normal text-muted mb-0">Find Event</p>
+        <div class="mt-5 mb-5 ">
+          <form th:action="@{/events/search}" class="form-inline my-lg-0 my-2 mb-3">
+            <input name="query" class="form-control me-sm-2 mb-5" type="search" placeholder="Search running clubs" aria-label="Search">
+          </form>
+        </div>
+      </div>
+      <div class="row gx-5">
+        <div th:each="event :${events}" class="col-lg-6 mb-5">
+          <a th:href="@{/events/{eventID}(eventID=${event.id})}" class="text-decoration-none">
+            <div class="position-relative mb-1">
+              <img class="img-fluid rounded-3 mb-3" th:src="${event.getPhotoUrl()}" alt="..." style="width: 600px; height: 400px" />
+              <span th:text="${event.name}" class="h3 fw-bolder text-decoration-none link-dark stretched-link">Project name</span>
+            </div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+</body>
+</html>

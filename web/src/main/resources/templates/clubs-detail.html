@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+<body class="d-flex flex-column">
+
+
+    <!-- Page Content-->
+    <section layout:fragment="body" class="py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Blog entries-->
+                <div class="col-lg-8">
+                    <!-- Featured blog post-->
+                    <div class="card mb-4">
+                        <img class="card-img-top" th:src="${club.photoUrl}" alt="..." />
+                        <div class="card-body">
+                            <div class="small text-muted" th:text="${club.updatedOn != null ? club.updatedOn : club.createdOn}"></div>
+                            <h2 class="card-title" th:text="${club.title}"></h2>
+                            <p class="card-text" th:text="${club.content}"></p>
+                            <div th:if="${user.id} == ${club.createdBy.id}">
+                                <a class="btn btn-primary mb-3" th:href="@{/clubs/{clubID}/edit(clubID=${club.id})}">Edit</a>
+                                <a class="btn btn-danger mb-3" th:href="@{/clubs/{clubID}/delete(clubID=${club.id})}">Delete</a>
+                                <a class="btn btn-info mb-3" th:href="@{/events/{clubID}/new(clubID=${club.id})}">Add Event</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--event posts-->
+                    <div class="row gx-5">
+
+                            <div th:each="event :${club.events}" class="mb-5 col-lg-4">
+                                <div class="card h-100 shadow border-0">
+                                <img class="card-img-top" style="height: 168px" th:src="${event.photoUrl}" alt="..." />
+                                <div class="card-body">
+                                    <div class="small text-muted" th:text="${event.updatedOn != null ? event.updatedOn : event.createdOn}"></div>
+                                    <h2 class="card-title" th:text="${event.name}"></h2>
+                                    <p class="card-text" th:text="${event.type}"></p>
+                                    <div>
+                                        <a class="btn btn-primary mb-3" th:href="@{/events/{eventID}(eventID=${event.id})}">Read more --></a>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+
+                    </div>
+                    <!-- Pagination-->
+                    <nav aria-label="Pagination">
+                        <hr class="my-0" />
+                        <ul class="pagination justify-content-center my-4">
+                            <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
+                            <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#!">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#!">3</a></li>
+                            <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
+                            <li class="page-item"><a class="page-link" href="#!">15</a></li>
+                            <li class="page-item"><a class="page-link" href="#!">Older</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <!-- Side widgets-->
+                <div class="col-lg-4">
+                    <!-- Search widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Search</div>
+                        <div class="card-body">
+                            <div class="input-group">
+                                <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
+                                <button class="btn btn-primary" id="button-search" type="button">Go!</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Categories widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Categories</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li><a href="#!">Run Beginner</a></li>
+                                        <li><a href="#!">Run Intermediate </a></li>
+                                        <li><a href="#!">Run Master</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li><a href="#!">Road</a></li>
+                                        <li><a href="#!">Forest</a></li>
+                                        <li><a href="#!">Mountain</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Side widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Side Widget</div>
+                        <div class="card-body">Some runners choose to participate in fun runs, athletics races or marathons. If you are interested in competing with other runners, contact your local running club!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+</body>
+</html>
